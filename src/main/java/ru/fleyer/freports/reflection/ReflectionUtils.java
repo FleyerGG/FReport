@@ -1,10 +1,12 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  */
 package ru.fleyer.freports.reflection;
+
+import org.bukkit.Bukkit;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -12,10 +14,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
-import org.bukkit.Bukkit;
 
 public final class ReflectionUtils {
-    public static Constructor<?> getConstructor(Class<?> clazz, Class<?> ... parameterTypes) throws NoSuchMethodException {
+    public static Constructor<?> getConstructor(Class<?> clazz, Class<?>... parameterTypes) throws NoSuchMethodException {
         Class<?>[] primitiveTypes = DataType.getPrimitive(parameterTypes);
         for (Constructor<?> constructor : clazz.getConstructors()) {
             if (!DataType.compare(DataType.getPrimitive(constructor.getParameterTypes()), primitiveTypes)) continue;
@@ -24,40 +25,41 @@ public final class ReflectionUtils {
         throw new NoSuchMethodException("There is no such constructor in this class with the specified parameter types");
     }
 
-    public static Constructor<?> getConstructor(String className, PackageType packageType, Class<?> ... parameterTypes) throws NoSuchMethodException, ClassNotFoundException {
+    public static Constructor<?> getConstructor(String className, PackageType packageType, Class<?>... parameterTypes) throws NoSuchMethodException, ClassNotFoundException {
         return ReflectionUtils.getConstructor(packageType.getClass(className), parameterTypes);
     }
 
-    public static Object instantiateObject(Class<?> clazz, Object ... arguments) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException {
+    public static Object instantiateObject(Class<?> clazz, Object... arguments) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException {
         return ReflectionUtils.getConstructor(clazz, DataType.getPrimitive(arguments)).newInstance(arguments);
     }
 
-    public static Object instantiateObject(String className, PackageType packageType, Object ... arguments) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, ClassNotFoundException {
+    public static Object instantiateObject(String className, PackageType packageType, Object... arguments) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, ClassNotFoundException {
         return ReflectionUtils.instantiateObject(packageType.getClass(className), arguments);
     }
 
-    public static Method getMethod(Class<?> clazz, String methodName, Class<?> ... parameterTypes) throws NoSuchMethodException {
+    public static Method getMethod(Class<?> clazz, String methodName, Class<?>... parameterTypes) throws NoSuchMethodException {
         Class<?>[] primitiveTypes = DataType.getPrimitive(parameterTypes);
         for (Method method : clazz.getMethods()) {
-            if (!method.getName().equals(methodName) || !DataType.compare(DataType.getPrimitive(method.getParameterTypes()), primitiveTypes)) continue;
+            if (!method.getName().equals(methodName) || !DataType.compare(DataType.getPrimitive(method.getParameterTypes()), primitiveTypes))
+                continue;
             return method;
         }
         throw new NoSuchMethodException("There is no such method in this class with the specified name and parameter types");
     }
 
-    public static Method getMethod(String className, PackageType packageType, String methodName, Class<?> ... parameterTypes) throws NoSuchMethodException, ClassNotFoundException {
+    public static Method getMethod(String className, PackageType packageType, String methodName, Class<?>... parameterTypes) throws NoSuchMethodException, ClassNotFoundException {
         return ReflectionUtils.getMethod(packageType.getClass(className), methodName, parameterTypes);
     }
 
-    public static Object invokeMethod(Object instance, String methodName, Object ... arguments) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException {
+    public static Object invokeMethod(Object instance, String methodName, Object... arguments) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException {
         return ReflectionUtils.getMethod(instance.getClass(), methodName, DataType.getPrimitive(arguments)).invoke(instance, arguments);
     }
 
-    public static Object invokeMethod(Object instance, Class<?> clazz, String methodName, Object ... arguments) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException {
+    public static Object invokeMethod(Object instance, Class<?> clazz, String methodName, Object... arguments) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException {
         return ReflectionUtils.getMethod(clazz, methodName, DataType.getPrimitive(arguments)).invoke(instance, arguments);
     }
 
-    public static Object invokeMethod(Object instance, String className, PackageType packageType, String methodName, Object ... arguments) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, ClassNotFoundException {
+    public static Object invokeMethod(Object instance, String className, PackageType packageType, String methodName, Object... arguments) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, ClassNotFoundException {
         return ReflectionUtils.invokeMethod(instance, packageType.getClass(className), methodName, arguments);
     }
 
@@ -97,13 +99,10 @@ public final class ReflectionUtils {
             f = clazz.getDeclaredField(field);
             f.setAccessible(true);
             f.set(object, fieldValue);
-        }
-        catch (NoSuchFieldException noSuchFieldException) {
-        }
-        catch (IllegalAccessException e) {
+        } catch (NoSuchFieldException noSuchFieldException) {
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             f.setAccessible(false);
         }
     }
@@ -145,7 +144,7 @@ public final class ReflectionUtils {
         }
 
         private PackageType(String s, int n2, PackageType parent, String path) {
-            this(s, n2, (Object)((Object)parent) + "." + path);
+            this(s, n2, (Object) ((Object) parent) + "." + path);
         }
 
         public String getPath() {
@@ -153,7 +152,7 @@ public final class ReflectionUtils {
         }
 
         public Class<?> getClass(String className) throws ClassNotFoundException {
-            return Class.forName((Object)((Object)this) + "." + className);
+            return Class.forName((Object) ((Object) this) + "." + className);
         }
 
         public String toString() {

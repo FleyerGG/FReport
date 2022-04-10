@@ -52,8 +52,7 @@ public class TimeUtils {
         String name = in.replaceAll("\\d", "");
         try {
             time = Integer.parseInt(in.replaceAll("\\D", ""));
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             return 0L;
         }
         if (name.equalsIgnoreCase("years") || name.equalsIgnoreCase("year") || name.equalsIgnoreCase("y")) {
@@ -78,12 +77,12 @@ public class TimeUtils {
         if (num % 100L > 10L && num % 100L < 15L) {
             return others;
         }
-        switch ((int)(num % 10L)) {
+        switch ((int) (num % 10L)) {
             case 1: {
                 return single;
             }
-            case 2: 
-            case 3: 
+            case 2:
+            case 3:
             case 4: {
                 return lessfive;
             }

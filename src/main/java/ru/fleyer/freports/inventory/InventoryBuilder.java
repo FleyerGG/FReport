@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.entity.Player
@@ -17,7 +17,6 @@
  */
 package ru.fleyer.freports.inventory;
 
-import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -30,8 +29,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitTask;
-import org.jetbrains.annotations.NotNull;
-import ru.fleyer.freports.FReports;
+
+import java.util.concurrent.ConcurrentHashMap;
 
 public class InventoryBuilder implements Listener {
     private int rows;
@@ -53,6 +52,7 @@ public class InventoryBuilder implements Listener {
         this.create();
         this.events();
     }
+
     //было
     public String getTitle() {
         return this.inv.getType().name();
@@ -117,7 +117,7 @@ public class InventoryBuilder implements Listener {
         if (listener != null) {
             HandlerList.unregisterAll(listener);
         }
-        listener = new Listener(){
+        listener = new Listener() {
 
             @EventHandler
             public void onClick(InventoryClickEvent e) {
@@ -141,7 +141,7 @@ public class InventoryBuilder implements Listener {
                 if (builder == null) {
                     return;
                 }
-                Player p = (Player)e.getPlayer();
+                Player p = (Player) e.getPlayer();
                 if (builder.getUpds().containsKey(p)) {
                     builder.getUpds().get(p).cancel();
                     builder.getUpds().clear();

@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.command.Command
  *  org.bukkit.command.CommandExecutor
@@ -9,12 +9,12 @@
  */
 package ru.fleyer.freports.commands;
 
-import ru.fleyer.freports.FReports;
-import ru.fleyer.freports.inventory.InventoryManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import ru.fleyer.freports.FReports;
+import ru.fleyer.freports.inventory.OpenListInv;
 
 public class ReportsCommand implements CommandExecutor {
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
@@ -26,7 +26,7 @@ public class ReportsCommand implements CommandExecutor {
             return false;
         }
         Player p = (Player) commandSender;
-        new InventoryManager(1).openList(p);
+        OpenListInv.openReport(p);
         return false;
     }
 }

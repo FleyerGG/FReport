@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.Bukkit
  *  org.bukkit.command.Command
@@ -12,12 +12,6 @@
  */
 package ru.fleyer.freports.commands;
 
-import ru.fleyer.freports.FReports;
-import ru.fleyer.freports.cooldown.CooldownManager;
-import ru.fleyer.freports.report.ReportManager;
-import ru.fleyer.freports.utils.NumberStringUtils;
-import ru.fleyer.freports.utils.RequestBungee;
-import ru.fleyer.freports.utils.TimeUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -25,6 +19,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissibleBase;
 import org.bukkit.permissions.ServerOperator;
+import ru.fleyer.freports.FReports;
+import ru.fleyer.freports.cooldown.CooldownManager;
+import ru.fleyer.freports.report.ReportManager;
+import ru.fleyer.freports.utils.NumberStringUtils;
+import ru.fleyer.freports.utils.RequestBungee;
+import ru.fleyer.freports.utils.TimeUtils;
 
 public class ReportCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String l, String[] args) {
@@ -48,7 +48,7 @@ public class ReportCommand implements CommandExecutor {
             sender.sendMessage(FReports.getInstance().getMessage("player_not_online").replace("{target}", args[0]));
             return false;
         }*/
-        PermissibleBase pb = new PermissibleBase((ServerOperator)Bukkit.getOfflinePlayer((String)args[0]));
+        PermissibleBase pb = new PermissibleBase((ServerOperator) Bukkit.getOfflinePlayer((String) args[0]));
         if (pb.hasPermission("magmareports.protection")) {
             sender.sendMessage(FReports.getInstance().getMessage("protection_player"));
             return false;
