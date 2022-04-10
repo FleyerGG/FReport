@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.mojang.authlib.GameProfile
  *  com.mojang.authlib.properties.Property
@@ -15,15 +15,16 @@ package ru.fleyer.freports.inventory;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
-import java.util.List;
-import java.util.UUID;
-import ru.fleyer.freports.reflection.ReflectionUtils;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import ru.fleyer.freports.reflection.ReflectionUtils;
+
+import java.util.List;
+import java.util.UUID;
 
 public class ItemBuilder {
     private ItemStack item;
@@ -76,15 +77,15 @@ public class ItemBuilder {
         SkullMeta skull = ((SkullMeta) item.getItemMeta()).clone();
         GameProfile profile = new GameProfile(UUID.randomUUID(), "Steve");
         profile.getProperties().put("textures", new Property("textures", texture));
-        ReflectionUtils.setField((Object)skull, "profile", (Object)profile);
-        this.item.setItemMeta((ItemMeta)skull);
+        ReflectionUtils.setField((Object) skull, "profile", (Object) profile);
+        this.item.setItemMeta((ItemMeta) skull);
         return this;
     }
 
     public ItemBuilder setSkull(String owner) {
-        SkullMeta skull = (SkullMeta)this.item.getItemMeta();
+        SkullMeta skull = (SkullMeta) this.item.getItemMeta();
         skull.setOwner(owner);
-        this.item.setItemMeta((ItemMeta)skull);
+        this.item.setItemMeta((ItemMeta) skull);
         return this;
     }
 

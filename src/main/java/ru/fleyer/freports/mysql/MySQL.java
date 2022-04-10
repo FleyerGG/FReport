@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.google.common.collect.Lists
  *  org.bukkit.Bukkit
@@ -9,18 +9,15 @@
 package ru.fleyer.freports.mysql;
 
 import com.google.common.collect.Lists;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Properties;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 import ru.fleyer.freports.FReports;
 import ru.fleyer.freports.report.ReportInfo;
 import ru.fleyer.freports.report.ReportManager;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Properties;
 
 public class MySQL {
     private String host;
@@ -38,8 +35,7 @@ public class MySQL {
         this.port = port;
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
-        }
-        catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
         }
         this.execute("CREATE TABLE IF NOT EXISTS `Report` (`id` int NOT NULL AUTO_INCREMENT, `username` varchar(255) NOT NULL, PRIMARY KEY (`id`)) DEFAULT CHARSET=utf8 COLLATE utf8_bin AUTO_INCREMENT=0");
@@ -58,8 +54,7 @@ public class MySQL {
             p.setProperty("characterEncoding", "cp1251");
             p.setProperty("autoReconnect", "true");
             this.connection = DriverManager.getConnection("jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database, p);
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return this.connection;
@@ -70,14 +65,13 @@ public class MySQL {
             PreparedStatement statement = this.getConnection().prepareStatement(query);
             statement.execute();
             statement.close();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public void update() {
-        Bukkit.getScheduler().runTaskTimerAsynchronously((Plugin)FReports.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskTimerAsynchronously((Plugin) FReports.getInstance(), () -> {
             try {
                 ReportManager.getHash().clear();
                 ResultSet resultSet = FReports.getInstance().getMySQL().getConnection().createStatement().executeQuery("SELECT * FROM `Report`");
@@ -91,8 +85,7 @@ public class MySQL {
                     rs.close();
                 }
                 resultSet.close();
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }, 0L, 60L);
@@ -101,8 +94,7 @@ public class MySQL {
     public void disconnect() {
         try {
             this.getConnection().close();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

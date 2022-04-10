@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.google.common.collect.Iterables
  *  org.bukkit.Bukkit
@@ -11,16 +11,14 @@
 package ru.fleyer.freports.utils;
 
 import com.google.common.collect.Iterables;
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-
-import ru.fleyer.freports.HandlerRequestBungee;
-import ru.fleyer.freports.FReports;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+import ru.fleyer.freports.FReports;
+import ru.fleyer.freports.HandlerRequestBungee;
+
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 
 public class RequestBungee {
 
@@ -43,20 +41,19 @@ public class RequestBungee {
             out.writeUTF(sender);
             out.writeUTF(player);
             out.writeUTF(errorMessage);
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
         if (Bukkit.getOnlinePlayers().size() == 0) {
             Bukkit.getServer().sendPluginMessage(FReports.getInstance(), "BungeeCord", b.toByteArray());
         } else {
-            ((Player)Iterables.getFirst((Iterable)Bukkit.getOnlinePlayers(), null)).sendPluginMessage(FReports.getInstance(), "BungeeCord", b.toByteArray());
+            ((Player) Iterables.getFirst((Iterable) Bukkit.getOnlinePlayers(), null)).sendPluginMessage(FReports.getInstance(), "BungeeCord", b.toByteArray());
         }
     }
 
     public boolean checkOnline(Player p, String player) {
         if (!FReports.getInstance().config().yaml().getBoolean("bungeecord_enable_plugin")) {
-            return Bukkit.getPlayerExact((String)player) != null;
+            return Bukkit.getPlayerExact((String) player) != null;
         }
         return HandlerRequestBungee.online_players.contains(player);
     }
@@ -76,14 +73,13 @@ public class RequestBungee {
             out.writeUTF("nreports_sendmessageall");
             out.writeUTF(message);
             out.writeUTF(permission);
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
         if (Bukkit.getOnlinePlayers().size() == 0) {
-            Bukkit.getServer().sendPluginMessage((Plugin)FReports.getInstance(), "BungeeCord", b.toByteArray());
+            Bukkit.getServer().sendPluginMessage((Plugin) FReports.getInstance(), "BungeeCord", b.toByteArray());
         } else {
-            ((Player)Iterables.getFirst((Iterable)Bukkit.getOnlinePlayers(), null)).sendPluginMessage((Plugin)FReports.getInstance(), "BungeeCord", b.toByteArray());
+            ((Player) Iterables.getFirst((Iterable) Bukkit.getOnlinePlayers(), null)).sendPluginMessage((Plugin) FReports.getInstance(), "BungeeCord", b.toByteArray());
         }
     }
 }

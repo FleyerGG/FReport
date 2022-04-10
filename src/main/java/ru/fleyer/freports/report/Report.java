@@ -4,7 +4,6 @@
 package ru.fleyer.freports.report;
 
 import java.util.ArrayList;
-import ru.fleyer.freports.report.ReportInfo;
 
 public class Report {
     private ArrayList<ReportInfo> reports;

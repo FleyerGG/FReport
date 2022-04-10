@@ -8,12 +8,12 @@ public class NumberStringUtils {
         if (num % 100L > 10L && num % 100L < 15L) {
             return others;
         }
-        switch ((int)(num % 10L)) {
+        switch ((int) (num % 10L)) {
             case 1: {
                 return single;
             }
-            case 2: 
-            case 3: 
+            case 2:
+            case 3:
             case 4: {
                 return lessfive;
             }

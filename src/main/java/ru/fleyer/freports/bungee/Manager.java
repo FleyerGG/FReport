@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  net.md_5.bungee.BungeeCord
  *  net.md_5.bungee.api.config.ServerInfo
@@ -12,13 +12,6 @@
  */
 package ru.fleyer.freports.bungee;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-
 import net.md_5.bungee.BungeeCord;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -26,6 +19,9 @@ import net.md_5.bungee.api.event.PluginMessageEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.event.EventHandler;
+
+import java.io.*;
+import java.util.concurrent.TimeUnit;
 
 public class Manager extends Plugin implements Listener {
     public void onEnable() {
@@ -63,14 +59,14 @@ public class Manager extends Plugin implements Listener {
                             out.writeUTF("nreports_teleportTo");
                             out.writeUTF(sender.getName());
 
-                        out.writeUTF(player.getName());
-                        out.writeUTF(message);
+                            out.writeUTF(player.getName());
+                            out.writeUTF(message);
                         } catch (IOException ioException) {
                             ioException.printStackTrace();
                         }
                         player.getServer().sendData("nreports_network", b.toByteArray());
                     }
-                }, 1,  TimeUnit.SECONDS);
+                }, 1, TimeUnit.SECONDS);
                 break;
             }
             case "nreports_listplayers": {
