@@ -14,7 +14,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import ru.fleyer.freports.FReports;
-import ru.fleyer.freports.inventory.InventoryManager;
 import ru.fleyer.freports.inventory.OpenListInv;
 
 public class ReportsCommand implements CommandExecutor {

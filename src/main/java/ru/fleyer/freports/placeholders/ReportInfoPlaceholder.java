@@ -1,7 +1,6 @@
 package ru.fleyer.freports.placeholders;
 
 import com.rainchat.raingui.utils.placeholder.BaseReplacements;
-import ru.fleyer.freports.report.Report;
 import ru.fleyer.freports.report.ReportInfo;
 
 public class ReportInfoPlaceholder extends BaseReplacements<ReportInfo> {

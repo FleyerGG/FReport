@@ -1,12 +1,9 @@
 package ru.fleyer.freports.inventory;
 
-import com.google.common.collect.Lists;
 import com.rainchat.raingui.menus.ClickItem;
 import com.rainchat.raingui.menus.PaginationMenu;
 import com.rainchat.raingui.utils.general.Item;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 import ru.fleyer.freports.FReports;
 import ru.fleyer.freports.placeholders.ReportInfoPlaceholder;
