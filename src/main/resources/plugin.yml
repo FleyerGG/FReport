@@ -1,0 +1,11 @@
+name: FReports
+version: '${project.version}'
+main: ru.fleyer.freports.FReports
+api-version: 1.18
+authors: [ Fleyer001 ]
+description: reports plugin
+commands:
+  report:
+  reports:
+    aliases:
+      - rs

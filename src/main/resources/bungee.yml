@@ -1,0 +1,5 @@
+main: ru.fleyer.freports.bungee.Manager
+version: 1.0
+name: FTest
+
+authors: [ Fleyer001 ]
