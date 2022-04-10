@@ -31,7 +31,6 @@ public class OpenListInv {
                 .material(Material.GRAY_STAINED_GLASS_PANE), inventoryClickEvent -> {
         }));
 
-
         List<ClickItem> clickItems = new ArrayList<>();
 
         for (Report report : ReportManager.getHash().values()) {
