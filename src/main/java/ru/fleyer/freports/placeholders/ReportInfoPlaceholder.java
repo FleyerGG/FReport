@@ -1,8 +1,10 @@
 package ru.fleyer.freports.placeholders;
 
 import com.rainchat.raingui.utils.placeholder.BaseReplacements;
+import ru.fleyer.freports.FReports;
 import ru.fleyer.freports.report.Report;
 import ru.fleyer.freports.report.ReportInfo;
+import ru.fleyer.freports.utils.TimeUtils;
 
 public class ReportInfoPlaceholder extends BaseReplacements<ReportInfo> {
 
@@ -19,7 +21,7 @@ public class ReportInfoPlaceholder extends BaseReplacements<ReportInfo> {
         return switch (base) {
             case "reason" -> report.getReason();
             case "name" -> report.getSender();
-            case "time" -> String.valueOf(report.getTime());
+            case "time" -> TimeUtils.getTime(report.getTime());
             default -> null;
         };
 

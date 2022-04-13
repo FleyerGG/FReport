@@ -8,8 +8,11 @@ package ru.fleyer.freports.configuration;
 
 import org.bukkit.configuration.file.FileConfiguration;
 
+import java.io.File;
+
 public interface ConfigurationImpl {
     public FileConfiguration yaml();
+    public FileConfiguration msg();
 
     public FileConfiguration yamlLoad();
 

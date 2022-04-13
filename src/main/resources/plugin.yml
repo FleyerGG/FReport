@@ -4,7 +4,9 @@ main: ru.fleyer.freports.FReports
 api-version: 1.18
 authors: [ Fleyer001 ]
 description: reports plugin
+softdepend: [ VKAPI ]
 commands:
+  frl:
   report:
   reports:
     aliases:

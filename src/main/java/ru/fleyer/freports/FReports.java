@@ -7,6 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import ru.fleyer.freports.commands.ReloadConfigs;
 import ru.fleyer.freports.commands.ReportCommand;
 import ru.fleyer.freports.commands.ReportsCommand;
 import ru.fleyer.freports.configuration.ConfigurationGeneration;
@@ -25,16 +26,19 @@ import java.util.zip.Inflater;
 public class FReports extends JavaPlugin {
     private static FReports instance;
     private ConfigurationGeneration config;
-    private Chat chat;
+    private ConfigurationGeneration lang;
+    public Chat chat;
     private MySQL mysql;
 
     public void onEnable() {
         instance = this;
         instance.saveDefaultConfig();
         config = new ConfigurationGeneration(FReports.getInstance(), "config.yml");
+        lang = new ConfigurationGeneration(FReports.getInstance(), "lang.yml");
         mysql = new MySQL(this.config.yaml().getString("mysql.host"), this.config.yaml().getString("mysql.username"), this.config.yaml().getString("mysql.password"), this.config.yaml().getString("mysql.database"), this.config.yaml().getString("mysql.port"));
         mysql.update();
         new HandlerRequestBungee().sendList();
+        getCommand("frl").setExecutor(new ReloadConfigs());
         this.getCommand("report").setExecutor((CommandExecutor) new ReportCommand());
         this.getCommand("reports").setExecutor((CommandExecutor) new ReportsCommand());
         this.getServer().getMessenger().registerOutgoingPluginChannel((Plugin) this, "BungeeCord");
@@ -57,10 +61,6 @@ public class FReports extends JavaPlugin {
         return chat != null;
     }
 
-    /*public String getPrefixPlayer(String playerName) {
-        return ChatColor.translateAlternateColorCodes('&', chat.getGroupPrefix((String)null, playerName));
-    }*/
-
     public static FReports getInstance() {
         return instance;
     }
@@ -71,6 +71,9 @@ public class FReports extends JavaPlugin {
 
     public ConfigurationGeneration config() {
         return this.config;
+    }
+    public ConfigurationGeneration lang(){
+        return this.lang;
     }
 
     static {

@@ -37,6 +37,7 @@ cooldown-report-command: '2m'
 
 # Сообщения
 messages:
+  serverVK: "Тестовый"
   no_permission: '&6[!] &fНедостаточно прав!'
   info_reports_player: '&6[!] &fИгрок &a{target} &fполучил &c{reports} &f- напишите &e(/reports, /rs)'
   usage_report_command: '&6[!] &f/report [ник] [причина] &a - подать жалобу на игрока'
@@ -157,4 +158,4 @@ inventory-profile-player:
       - ''
       - '&7Время: &6{time} назад'
       - '&7Отправитель: &r{prefix}{reporter}'
-      - '&7Причина: &b{reason}'
+      - '&7Причина: {reason}'

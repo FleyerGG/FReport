@@ -17,18 +17,23 @@ import java.io.IOException;
 
 public class ConfigurationGeneration implements ConfigurationImpl {
     private FileConfiguration config;
+    private FileConfiguration lang;
     private String fileName;
     private Plugin plugin;
 
     public ConfigurationGeneration(Plugin plugin, String fileName) {
         this.plugin = plugin;
         this.fileName = fileName;
+        this.lang = yamlLoad();
         this.config = this.yamlLoad();
     }
 
     @Override
     public FileConfiguration yaml() {
         return this.config;
+    }
+    public FileConfiguration msg() {
+        return this.lang;
     }
 
     @Override
@@ -52,6 +57,7 @@ public class ConfigurationGeneration implements ConfigurationImpl {
     public void save() {
         try {
             this.config.save(this.fileName);
+            this.lang.save(this.fileName);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -60,6 +66,7 @@ public class ConfigurationGeneration implements ConfigurationImpl {
     @Override
     public void reloadConfiguration() {
         this.config = this.yamlLoad();
+        this.lang = this.yamlLoad();
     }
 }
 

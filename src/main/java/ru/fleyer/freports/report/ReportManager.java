@@ -48,7 +48,7 @@ public class ReportManager {
     }
 
     public static Report getReport(String player) {
-        return (Report) hash.get(player);
+        return hash.get(player);
     }
 }
 

@@ -1,11 +1,16 @@
 package ru.fleyer.freports.placeholders;
 
 import com.rainchat.raingui.utils.placeholder.BaseReplacements;
+
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
+import ru.fleyer.freports.FReports;
 import ru.fleyer.freports.report.Report;
 
 public class ReportPlaceholder extends BaseReplacements<Report> {
-
     private Report report;
+
 
     public ReportPlaceholder(Report report) {
         super("report_");

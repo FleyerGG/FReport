@@ -12,6 +12,7 @@
  */
 package ru.fleyer.freports.commands;
 
+import com.ubivashka.vk.spigot.VKAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -70,6 +71,15 @@ public class ReportCommand implements CommandExecutor {
             return false;
         }
         ReportManager.addReport(args[0], sender.getName(), sb.substring(0, sb.length() - 1));
+        VKAPI.getInstance().getVKUtil().sendMSGtoPeer(2000000001,("@online #ticket\n" +
+                "⚠ Поступила жалоба ⚠\n" +
+                "\n👤 Игрок: %player%" +
+                "\n❗ Нарушитель: %target%" +
+                "\n💬 Причина: %reason%\n" +
+                "\n📗 Сервер: " + FReports.getInstance().config().yaml().getString("messages.serverVK")).replace("%player%", sender.getName())
+                                            .replace("%target%",args[0])
+                                            .replace("%reason%",sb.substring(0, sb.length() - 1)));
+
         sender.sendMessage(FReports.getInstance().getMessage("successful_send_report").replace("{target}", args[0]).replace("{reason}", sb.substring(0, sb.length() - 1)));
         new RequestBungee().sendMessageAll(FReports.getInstance().getMessage("info_reports_player").replace("{target}", args[0]).replace("{reports}", NumberStringUtils.getFormat(ReportManager.getReport(args[0]).getReports().size(), "\u0440\u0435\u043f\u043e\u0440\u0442", "\u0440\u0435\u043f\u043e\u0440\u0442\u0430", "\u0440\u0435\u043f\u043e\u0440\u0442\u043e\u0432")), "magmareports.info-report");
         CooldownManager.createCooldown(sender.getName(), "report", TimeUtils.longTime(FReports.getInstance().config().yaml().getString("cooldown-report-command")));

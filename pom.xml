@@ -40,6 +40,7 @@
                         </goals>
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <outputFile>C:\Users\leofe\OneDrive\Рабочий стол\Новая папка (2)\GRIEF\plugins\FReports.jar</outputFile>
                         </configuration>
                     </execution>
                 </executions>
@@ -80,8 +81,9 @@
         <dependency>
             <groupId>com.github.rainchat</groupId>
             <artifactId>LiteGui</artifactId>
-            <version>2.1</version>
+            <version>2.3</version>
         </dependency>
+
         <dependency>
             <groupId>com.mojang</groupId>
             <artifactId>authlib</artifactId>

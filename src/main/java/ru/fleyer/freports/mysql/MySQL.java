@@ -71,7 +71,7 @@ public class MySQL {
     }
 
     public void update() {
-        Bukkit.getScheduler().runTaskTimerAsynchronously((Plugin) FReports.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskTimerAsynchronously( FReports.getInstance(), () -> {
             try {
                 ReportManager.getHash().clear();
                 ResultSet resultSet = FReports.getInstance().getMySQL().getConnection().createStatement().executeQuery("SELECT * FROM `Report`");
