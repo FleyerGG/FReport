@@ -21,7 +21,7 @@ public class ReportsCommand implements CommandExecutor {
         if (!(commandSender instanceof Player)) {
             return false;
         }
-        if (!commandSender.hasPermission("magmareports.reports")) {
+        if (!commandSender.hasPermission("freport.reports")) {
             commandSender.sendMessage(FReports.getInstance().getMessage("no_permission"));
             return false;
         }

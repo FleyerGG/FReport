@@ -1,0 +1,50 @@
+# Сообщения
+messages:
+  no_permission: '&6[!] &fНедостаточно прав!'
+  info_reports_player: '&6[!] &fИгрок &a%target% &fполучил &c{reports} &f- напишите &e(/reports, /rs)'
+  usage_report_command: '&6[!] &f/report [ник] [причина] &a - подать жалобу на игрока'
+  player_not_online: '&6[!] &fИгрок &c%target% &fне онлайн!'
+  successful_send_report: '&6[!] &fВы успешно отправили репорт на игрока &c%target% &fпо причине: &a{reason}'
+  teleport_player: '&6[!] &fВы успешно телепортировались к &c%target%'
+  limit_reports: '&6[!] &fУ игрока &c%target% &fпревышен лимит жалоб!'
+  cooldown_report_command: '&6[!] &fДля след. отправки репорта подождите &c{time}'
+  sender_instanceof_player: '&6[!] &fВы не можете на самого себя подать репорт!'
+  little_reason: '&6[!] &fУкажите длиннее причину репорта!'
+  protection_player: '&6[!] &fВы не можете подать жалобу на данного игрока!'
+  banned_player: '&6[!] &fВы наказали &a%target%'
+  cancel_report_player: '&6[!] &fАдминистратор &c{admin}&f отклонил репорт на игрока &a%target%'
+
+#Меню банов
+ban-player:
+  bans:
+    1:
+      name: '&fБан &aнавсегда'
+      punish: 'ban %target% Читы.'
+      lore:
+        - ''
+        - '&eИспользование читов'
+    2:
+      name: '&fБан на &c1 час'
+      punish: 'tempban %target% 1h Гриферство.'
+      lore:
+        - ''
+        - '&eГриферство'
+    3:
+      name: '&fБан на &c2 час'
+      punish: 'tempban %target% 2h Использование багов.'
+      lore:
+        - ''
+        - '&eИспользование багов'
+    4:
+      name: '&fБан на &c3 час'
+      punish: 'tempban %target% 3h Обман администрации.'
+      lore:
+        - ''
+        - '&eОбман администрации'
+    5:
+      name: '&fБан &aнавсегда'
+      punish: 'ban %target% Оск. администрации.'
+      lore:
+        - ''
+        - '&eОск. администрации'
+

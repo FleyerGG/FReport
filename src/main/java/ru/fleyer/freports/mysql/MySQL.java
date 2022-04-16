@@ -10,7 +10,6 @@ package ru.fleyer.freports.mysql;
 
 import com.google.common.collect.Lists;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
 import ru.fleyer.freports.FReports;
 import ru.fleyer.freports.report.ReportInfo;
 import ru.fleyer.freports.report.ReportManager;

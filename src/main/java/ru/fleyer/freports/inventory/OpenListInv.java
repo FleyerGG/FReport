@@ -6,8 +6,6 @@ import com.rainchat.raingui.utils.general.Item;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
 import ru.fleyer.freports.FReports;
 import ru.fleyer.freports.placeholders.ReportInfoPlaceholder;
 import ru.fleyer.freports.placeholders.ReportPlaceholder;
@@ -136,12 +134,12 @@ public class OpenListInv {
                 "&aНажмите сюда, чтобы телепортироваться"
         )), event -> {
             if (new RequestBungee().checkOnline(player, target)) {
-                new RequestBungee().teleport(player.getName(), target, FReports.getInstance().config().yaml().getString("messages.teleport_player").replace("%target%", target));
-                player.sendMessage(msg(lang.getString("messages.teleport_player").replace("{target}", target)));
+                new RequestBungee().teleport(player.getName(), target, FReports.getInstance().getMessage("messages.teleport_player").replace("%target%", target));
+                player.sendMessage(msg(lang.getString("messages.teleport_player").replace("%target%", target)));
                 player.setGameMode(GameMode.SPECTATOR);
             } else {
 
-                player.sendMessage(msg(lang.getString("messages.player_not_online").replace("{target}", target)));
+                player.sendMessage(msg(lang.getString("messages.player_not_online").replace("%target%", target)));
             }
         }));
         paginationMenu.setItem(2, new ClickItem(new Item().material(Material.BOOK).name("&cВыдать бан").lore(Arrays.asList(
@@ -186,7 +184,6 @@ public class OpenListInv {
     }
 
     public static void onBansPlayer(Player player, String target) {
-        FileConfiguration config = FReports.getInstance().config().yaml();
         PaginationMenu paginationMenu = new PaginationMenu(FReports.getInstance(), "Блокировка %target%".replace("%target%", target), 5);
         int page = paginationMenu.getPage();
 
@@ -231,15 +228,15 @@ public class OpenListInv {
             openTargetReport(player,target);
         }));
 
-        for (String s : FReports.getInstance().config().yaml().getConfigurationSection("inventory-ban-player.bans").getKeys(false)) {
+        for (String s : FReports.getInstance().lang().msg().getConfigurationSection("ban-player.bans").getKeys(false)) {
 
             ClickItem clickItem = new ClickItem(new Item().material(Material.PAPER)
-                    .name(config.getString("inventory-ban-player.bans." + s + ".name"))
-                    .lore(config.getStringList("inventory-ban-player.bans." + s + ".lore")), event -> {
-                Bukkit.dispatchCommand(player, config.getString("inventory-ban-player.bans." + s + ".punish").replace("{target}", target));
+                    .name(lang.getString("ban-player.bans." + s + ".name"))
+                    .lore(lang.getStringList("ban-player.bans." + s + ".lore")), event -> {
+                player.chat(lang.getString("ban-player.bans." + s + ".punish").replace("%target%", target));
                 ReportManager.removeReport(target);
                 paginationMenu.close(player);
-                player.sendMessage(FReports.getInstance().lang().msg().getString("test"));
+                player.sendMessage(FReports.getInstance().getMessage("banned_player").replace("%target%",target));
 
             });
             clickItems.add(clickItem);

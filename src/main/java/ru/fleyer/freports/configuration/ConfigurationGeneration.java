@@ -41,16 +41,16 @@ public class ConfigurationGeneration implements ConfigurationImpl {
         File file = new File(this.plugin.getDataFolder(), this.fileName);
         if (this.plugin.getResource(this.fileName) == null) {
             try {
-                YamlConfiguration.loadConfiguration((File) file).save(file);
+                YamlConfiguration.loadConfiguration( file).save(file);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return YamlConfiguration.loadConfiguration((File) file);
+            return YamlConfiguration.loadConfiguration( file);
         }
         if (!file.exists()) {
             this.plugin.saveResource(this.fileName, false);
         }
-        return YamlConfiguration.loadConfiguration((File) file);
+        return YamlConfiguration.loadConfiguration( file);
     }
 
     @Override

@@ -17,19 +17,19 @@ public class CooldownManager {
     }
 
     public static boolean hasCdw(String playerName, String name) {
-        Cooldown c = (Cooldown) accs.get((Object) playerName.toLowerCase(), (Object) name);
+        Cooldown c =  accs.get( playerName.toLowerCase(), name);
         if (c == null) {
             return false;
         }
         if (c.isLeft()) {
-            accs.remove((Object) playerName.toLowerCase(), (Object) name);
+            accs.remove( playerName.toLowerCase(),  name);
             return false;
         }
         return true;
     }
 
     public static long getLeftTime(String playerName, String name) {
-        return ((Cooldown) accs.get((Object) playerName.toLowerCase(), (Object) name)).getLeftTime();
+        return ( accs.get( playerName.toLowerCase(),  name)).getLeftTime();
     }
 }
 

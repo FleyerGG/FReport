@@ -2,11 +2,11 @@ package ru.fleyer.freports;
 
 
 import net.milkbowl.vault.chat.Chat;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.messaging.PluginMessageListener;
 import ru.fleyer.freports.commands.ReloadConfigs;
 import ru.fleyer.freports.commands.ReportCommand;
 import ru.fleyer.freports.commands.ReportsCommand;
@@ -35,29 +35,38 @@ public class FReports extends JavaPlugin {
         instance.saveDefaultConfig();
         config = new ConfigurationGeneration(FReports.getInstance(), "config.yml");
         lang = new ConfigurationGeneration(FReports.getInstance(), "lang.yml");
-        mysql = new MySQL(this.config.yaml().getString("mysql.host"), this.config.yaml().getString("mysql.username"), this.config.yaml().getString("mysql.password"), this.config.yaml().getString("mysql.database"), this.config.yaml().getString("mysql.port"));
+
+        mysql = new MySQL(config.yaml().getString("mysql.host"), 
+                config.yaml().getString("mysql.username"), 
+                config.yaml().getString("mysql.password"), 
+                config.yaml().getString("mysql.database"), 
+                config.yaml().getString("mysql.port"));
         mysql.update();
+
         new HandlerRequestBungee().sendList();
+
         getCommand("frl").setExecutor(new ReloadConfigs());
-        this.getCommand("report").setExecutor((CommandExecutor) new ReportCommand());
-        this.getCommand("reports").setExecutor((CommandExecutor) new ReportsCommand());
-        this.getServer().getMessenger().registerOutgoingPluginChannel((Plugin) this, "BungeeCord");
-        //this.getServer().getMessenger().registerIncomingPluginChannel((Plugin)this, "nreports_network", (PluginMessageListener)new HandlerRequestBungee());
-        this.setupChat();
+        getCommand("report").setExecutor( new ReportCommand());
+        getCommand("reports").setExecutor( new ReportsCommand());
+
+        Bukkit.getMessenger().registerOutgoingPluginChannel( this, "BungeeCord");
+        Bukkit.getMessenger().registerIncomingPluginChannel(this, "namespace:nreports_network", new HandlerRequestBungee());
+
+        setupChat();
     }
 
     public void onDisable() {
         ReportManager.getHash().clear();
-        this.mysql.disconnect();
+        mysql.disconnect();
     }
 
     public MySQL getMySQL() {
-        return this.mysql;
+        return mysql;
     }
 
     private boolean setupChat() {
-        RegisteredServiceProvider<Chat> rsp = this.getServer().getServicesManager().getRegistration(Chat.class);
-        chat = (Chat) rsp.getProvider();
+        RegisteredServiceProvider<Chat> rsp = getServer().getServicesManager().getRegistration(Chat.class);
+        chat = rsp.getProvider();
         return chat != null;
     }
 
@@ -66,14 +75,14 @@ public class FReports extends JavaPlugin {
     }
 
     public String getMessage(String message) {
-        return ChatColor.translateAlternateColorCodes('&', this.config.yaml().getString("messages." + message));
+        return ChatColor.translateAlternateColorCodes('&', lang.msg().getString("messages." + message));
     }
 
     public ConfigurationGeneration config() {
-        return this.config;
+        return config;
     }
     public ConfigurationGeneration lang(){
-        return this.lang;
+        return lang;
     }
 
     static {

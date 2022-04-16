@@ -19,7 +19,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissibleBase;
-import org.bukkit.permissions.ServerOperator;
 import ru.fleyer.freports.FReports;
 import ru.fleyer.freports.cooldown.CooldownManager;
 import ru.fleyer.freports.report.ReportManager;
@@ -32,13 +31,14 @@ public class ReportCommand implements CommandExecutor {
         if (!(sender instanceof Player)) {
             return false;
         }
-        if (!sender.hasPermission("magmareports.report")) {
+        if (!sender.hasPermission("freport.report")) {
 
             sender.sendMessage(FReports.getInstance().getMessage("no_permission"));
             return false;
         }
         if (CooldownManager.hasCdw(sender.getName(), "report")) {
-            sender.sendMessage(FReports.getInstance().getMessage("cooldown_report_command").replace("{time}", TimeUtils.getTime(CooldownManager.getLeftTime(sender.getName(), "report"))));
+            sender.sendMessage(FReports.getInstance().getMessage("cooldown_report_command").replace("{time}",
+                    TimeUtils.getTime(CooldownManager.getLeftTime(sender.getName(), "report"))));
             return false;
         }
         if (args.length < 2) {
@@ -46,15 +46,15 @@ public class ReportCommand implements CommandExecutor {
             return false;
         }
         /*if (!new RequestBungee().checkOnline((Player)sender, args[0])) {
-            sender.sendMessage(FReports.getInstance().getMessage("player_not_online").replace("{target}", args[0]));
+            sender.sendMessage(FReports.getInstance().getMessage("player_not_online").replace("%target%", args[0]));
             return false;
         }*/
-        PermissibleBase pb = new PermissibleBase((ServerOperator) Bukkit.getOfflinePlayer((String) args[0]));
-        if (pb.hasPermission("magmareports.protection")) {
+        PermissibleBase pb = new PermissibleBase(Bukkit.getOfflinePlayer(args[0]));
+        if (pb.hasPermission("freport.protec")) {
             sender.sendMessage(FReports.getInstance().getMessage("protection_player"));
             return false;
         }
-        if (sender.getName().toLowerCase().equals(args[0].toLowerCase())) {
+        if (sender.getName().equalsIgnoreCase(args[0].toLowerCase())) {
             sender.sendMessage(FReports.getInstance().getMessage("sender_instanceof_player"));
             return false;
         }
@@ -67,21 +67,26 @@ public class ReportCommand implements CommandExecutor {
             return false;
         }
         if (ReportManager.getReport(args[0]) != null && ReportManager.getReport(args[0]).getReports().size() == 18) {
-            sender.sendMessage(FReports.getInstance().getMessage("limit_reports").replace("{target}", args[0]));
+            sender.sendMessage(FReports.getInstance().getMessage("limit_reports").replace("%target%", args[0]));
             return false;
         }
         ReportManager.addReport(args[0], sender.getName(), sb.substring(0, sb.length() - 1));
-        VKAPI.getInstance().getVKUtil().sendMSGtoPeer(2000000001,("@online #ticket\n" +
+        VKAPI.getInstance().getVKUtil().sendMSGtoPeer(FReports.getInstance().config().yaml().getInt("VK.peer"),("@online #ticket\n" +
                 "⚠ Поступила жалоба ⚠\n" +
                 "\n👤 Игрок: %player%" +
                 "\n❗ Нарушитель: %target%" +
                 "\n💬 Причина: %reason%\n" +
-                "\n📗 Сервер: " + FReports.getInstance().config().yaml().getString("messages.serverVK")).replace("%player%", sender.getName())
+                "\n📗 Сервер: " + FReports.getInstance().config().yaml().getString("VK.server")).replace("%player%", sender.getName())
                                             .replace("%target%",args[0])
                                             .replace("%reason%",sb.substring(0, sb.length() - 1)));
 
-        sender.sendMessage(FReports.getInstance().getMessage("successful_send_report").replace("{target}", args[0]).replace("{reason}", sb.substring(0, sb.length() - 1)));
-        new RequestBungee().sendMessageAll(FReports.getInstance().getMessage("info_reports_player").replace("{target}", args[0]).replace("{reports}", NumberStringUtils.getFormat(ReportManager.getReport(args[0]).getReports().size(), "\u0440\u0435\u043f\u043e\u0440\u0442", "\u0440\u0435\u043f\u043e\u0440\u0442\u0430", "\u0440\u0435\u043f\u043e\u0440\u0442\u043e\u0432")), "magmareports.info-report");
+        sender.sendMessage(FReports.getInstance().getMessage("successful_send_report").replace("%target%", args[0])
+                                                                                        .replace("{reason}", sb.substring(0, sb.length() - 1)));
+        new RequestBungee().sendMessageAll(FReports.getInstance().getMessage("info_reports_player").replace("%target%", args[0]).replace("{reports}",
+                NumberStringUtils.getFormat(ReportManager.getReport(args[0]).getReports().size(),
+                        "репорт", "репорта", "репортов")), "freport.info-report");
+
+
         CooldownManager.createCooldown(sender.getName(), "report", TimeUtils.longTime(FReports.getInstance().config().yaml().getString("cooldown-report-command")));
         return false;
     }

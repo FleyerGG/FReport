@@ -30,12 +30,12 @@ public class HandlerRequestBungee implements PluginMessageListener {
     public void onPluginMessageReceived(String s, Player player, byte[] bytes) {
         try {
             String channel;
-            if (!s.equals("nreports_network")) {
+            if (!s.equals("namespace:nreports_network")) {
                 return;
             }
             DataInputStream in = new DataInputStream(new ByteArrayInputStream(bytes));
             switch (channel = in.readUTF()) {
-                case "nreports_teleportTo": {
+                case "namespace:nreports_teleportTo": {
                     Player sender = Bukkit.getPlayerExact(in.readUTF());
                     if (sender == null) {
                         return;
@@ -50,7 +50,7 @@ public class HandlerRequestBungee implements PluginMessageListener {
                     sender.setGameMode(GameMode.SPECTATOR);
                     break;
                 }
-                case "nreport_bukkit_sendmessageall": {
+                case "namespace:nreport_bukkit_sendmessageall": {
                     String message = in.readUTF();
                     String perm = in.readUTF();
                     for (Player p : Bukkit.getOnlinePlayers()) {
@@ -59,7 +59,7 @@ public class HandlerRequestBungee implements PluginMessageListener {
                     }
                     break;
                 }
-                case "nreports_listplayers_bukkit": {
+                case "namespace:nreports_listplayers_bukkit": {
                     String list = in.readUTF();
                     online_players.clear();
                     online_players.addAll(Arrays.asList(list.split(",")));
@@ -77,7 +77,7 @@ public class HandlerRequestBungee implements PluginMessageListener {
                 ByteArrayOutputStream b = new ByteArrayOutputStream();
                 DataOutputStream out = new DataOutputStream(b);
                 try {
-                    out.writeUTF("nreports_listplayers");
+                    out.writeUTF("namespace:nreports_listplayers");
                     out.writeUTF(((Player) Iterables.getFirst((Iterable) Bukkit.getOnlinePlayers(), null)).getName());
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -85,7 +85,8 @@ public class HandlerRequestBungee implements PluginMessageListener {
                 if (Bukkit.getOnlinePlayers().size() == 0) {
                     Bukkit.getServer().sendPluginMessage(FReports.getInstance(), "BungeeCord", b.toByteArray());
                 } else {
-                    ((Player) Iterables.getFirst((Iterable) Bukkit.getOnlinePlayers(), null)).sendPluginMessage(FReports.getInstance(), "BungeeCord", b.toByteArray());
+                    ((Player) Iterables.getFirst((Iterable) Bukkit.getOnlinePlayers(), null))
+                            .sendPluginMessage(FReports.getInstance(), "BungeeCord", b.toByteArray());
                 }
             }
         }, 0L, 10L);

@@ -37,7 +37,7 @@ public class RequestBungee {
         ByteArrayOutputStream b = new ByteArrayOutputStream();
         DataOutputStream out = new DataOutputStream(b);
         try {
-            out.writeUTF("nreports_teleport");
+            out.writeUTF("namespace:nreports_teleport");
             out.writeUTF(sender);
             out.writeUTF(player);
             out.writeUTF(errorMessage);
@@ -53,7 +53,7 @@ public class RequestBungee {
 
     public boolean checkOnline(Player p, String player) {
         if (!FReports.getInstance().config().yaml().getBoolean("bungeecord_enable_plugin")) {
-            return Bukkit.getPlayerExact((String) player) != null;
+            return Bukkit.getPlayerExact(player) != null;
         }
         return HandlerRequestBungee.online_players.contains(player);
     }
@@ -70,7 +70,7 @@ public class RequestBungee {
         ByteArrayOutputStream b = new ByteArrayOutputStream();
         DataOutputStream out = new DataOutputStream(b);
         try {
-            out.writeUTF("nreports_sendmessageall");
+            out.writeUTF("namespace:nreports_sendmessageall");
             out.writeUTF(message);
             out.writeUTF(permission);
         } catch (Exception ex) {
