@@ -1,4 +1,4 @@
-package ru.fleyer.freports.commands;
+package ru.fleyer.freports.spigot.resource.commands;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;

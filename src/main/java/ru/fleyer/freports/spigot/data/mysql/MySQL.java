@@ -1,18 +1,10 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  com.google.common.collect.Lists
- *  org.bukkit.Bukkit
- *  org.bukkit.plugin.Plugin
- */
-package ru.fleyer.freports.mysql;
+package ru.fleyer.freports.spigot.data.mysql;
 
 import com.google.common.collect.Lists;
 import org.bukkit.Bukkit;
 import ru.fleyer.freports.FReports;
-import ru.fleyer.freports.report.ReportInfo;
-import ru.fleyer.freports.report.ReportManager;
+import ru.fleyer.freports.spigot.data.report.ReportInfo;
+import ru.fleyer.freports.spigot.data.report.ReportManager;
 
 import java.sql.*;
 import java.util.ArrayList;

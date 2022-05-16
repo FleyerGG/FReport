@@ -1,15 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  net.md_5.bungee.BungeeCord
- *  net.md_5.bungee.api.config.ServerInfo
- *  net.md_5.bungee.api.connection.ProxiedPlayer
- *  net.md_5.bungee.api.event.PluginMessageEvent
- *  net.md_5.bungee.api.plugin.Listener
- *  net.md_5.bungee.api.plugin.Plugin
- *  net.md_5.bungee.event.EventHandler
- */
 package ru.fleyer.freports.bungee;
 
 import net.md_5.bungee.BungeeCord;
@@ -38,7 +26,7 @@ public class Manager extends Plugin implements Listener {
         }
         DataInputStream in = new DataInputStream(new ByteArrayInputStream(e.getData()));
         switch (channel = in.readUTF()) {
-            case "namespace:nreports_teleport": {
+            case "nreports_teleport": {
                 String sender1 = in.readUTF();
                 String player1 = in.readUTF();
                 String message = in.readUTF();
@@ -56,7 +44,7 @@ public class Manager extends Plugin implements Listener {
                         ByteArrayOutputStream b = new ByteArrayOutputStream();
                         DataOutputStream out = new DataOutputStream(b);
                         try {
-                            out.writeUTF("namespace:nreports_teleportTo");
+                            out.writeUTF("nreports_teleportTo");
                             out.writeUTF(sender.getName());
 
                             out.writeUTF(player.getName());
@@ -69,7 +57,7 @@ public class Manager extends Plugin implements Listener {
                 }, 1, TimeUnit.SECONDS);
                 break;
             }
-            case "namespace:nreports_listplayers": {
+            case "nreports_listplayers": {
                 ByteArrayOutputStream b = new ByteArrayOutputStream();
                 DataOutputStream out = new DataOutputStream(b);
                 StringBuffer sb = new StringBuffer();
@@ -78,23 +66,23 @@ public class Manager extends Plugin implements Listener {
                         sb.append(pl.getName()).append(",");
                     }
                 }
-                out.writeUTF("namespace:nreports_listplayers_bukkit");
+                out.writeUTF("nreports_listplayers_bukkit");
                 out.writeUTF(sb.substring(0, sb.length() - 1));
-                this.getProxy().getPlayer(in.readUTF()).getServer().sendData("nreports_network", b.toByteArray());
+                this.getProxy().getPlayer(in.readUTF()).getServer().sendData("namespace:nreports_network", b.toByteArray());
                 break;
             }
-            case "namespace:nreports_broadcast": {
+            case "nreports_broadcast": {
                 this.getProxy().broadcast(in.readUTF());
                 break;
             }
-            case "namespace:nreports_sendmessageall": {
+            case "nreports_sendmessageall": {
                 String message = in.readUTF();
                 String permission = in.readUTF();
                 for (ServerInfo serv : this.getProxy().getServers().values()) {
                     if (serv.getPlayers().size() <= 0) continue;
                     ByteArrayOutputStream b = new ByteArrayOutputStream();
                     DataOutputStream out = new DataOutputStream(b);
-                    out.writeUTF("namespace:nreport_bukkit_sendmessageall");
+                    out.writeUTF("nreport_bukkit_sendmessageall");
                     out.writeUTF(message);
                     out.writeUTF(permission);
                     serv.sendData("namespace:nreports_network", b.toByteArray());

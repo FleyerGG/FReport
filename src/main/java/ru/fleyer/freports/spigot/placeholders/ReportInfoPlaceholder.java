@@ -1,8 +1,8 @@
-package ru.fleyer.freports.placeholders;
+package ru.fleyer.freports.spigot.placeholders;
 
 import com.rainchat.raingui.utils.placeholder.BaseReplacements;
-import ru.fleyer.freports.report.ReportInfo;
-import ru.fleyer.freports.utils.TimeUtils;
+import ru.fleyer.freports.spigot.data.report.ReportInfo;
+import ru.fleyer.freports.spigot.utils.TimeUtils;
 
 public class ReportInfoPlaceholder extends BaseReplacements<ReportInfo> {
 

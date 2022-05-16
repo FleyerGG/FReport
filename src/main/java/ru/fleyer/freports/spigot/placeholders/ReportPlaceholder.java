@@ -1,8 +1,8 @@
-package ru.fleyer.freports.placeholders;
+package ru.fleyer.freports.spigot.placeholders;
 
 import com.rainchat.raingui.utils.placeholder.BaseReplacements;
 
-import ru.fleyer.freports.report.Report;
+import ru.fleyer.freports.spigot.data.report.Report;
 
 public class ReportPlaceholder extends BaseReplacements<Report> {
     private Report report;

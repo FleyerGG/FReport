@@ -1,10 +1,4 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  com.google.common.collect.TreeBasedTable
- */
-package ru.fleyer.freports.cooldown;
+package ru.fleyer.freports.spigot.resource.cooldown;
 
 import com.google.common.collect.TreeBasedTable;
 

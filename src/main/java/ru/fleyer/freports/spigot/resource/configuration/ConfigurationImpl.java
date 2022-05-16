@@ -1,14 +1,6 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  org.bukkit.configuration.file.FileConfiguration
- */
-package ru.fleyer.freports.configuration;
+package ru.fleyer.freports.spigot.resource.configuration;
 
 import org.bukkit.configuration.file.FileConfiguration;
-
-import java.io.File;
 
 public interface ConfigurationImpl {
     public FileConfiguration yaml();

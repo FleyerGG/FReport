@@ -1,19 +1,8 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  com.google.common.collect.Iterables
- *  org.bukkit.Bukkit
- *  org.bukkit.entity.Entity
- *  org.bukkit.entity.Player
- *  org.bukkit.plugin.Plugin
- */
-package ru.fleyer.freports.utils;
+package ru.fleyer.freports.spigot.utils;
 
 import com.google.common.collect.Iterables;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import ru.fleyer.freports.FReports;
 import ru.fleyer.freports.HandlerRequestBungee;
 
@@ -37,7 +26,7 @@ public class RequestBungee {
         ByteArrayOutputStream b = new ByteArrayOutputStream();
         DataOutputStream out = new DataOutputStream(b);
         try {
-            out.writeUTF("namespace:nreports_teleport");
+            out.writeUTF("nreports_teleport");
             out.writeUTF(sender);
             out.writeUTF(player);
             out.writeUTF(errorMessage);
@@ -70,16 +59,16 @@ public class RequestBungee {
         ByteArrayOutputStream b = new ByteArrayOutputStream();
         DataOutputStream out = new DataOutputStream(b);
         try {
-            out.writeUTF("namespace:nreports_sendmessageall");
+            out.writeUTF("nreports_sendmessageall");
             out.writeUTF(message);
             out.writeUTF(permission);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         if (Bukkit.getOnlinePlayers().size() == 0) {
-            Bukkit.getServer().sendPluginMessage((Plugin) FReports.getInstance(), "BungeeCord", b.toByteArray());
+            Bukkit.getServer().sendPluginMessage(FReports.getInstance(), "BungeeCord", b.toByteArray());
         } else {
-            ((Player) Iterables.getFirst((Iterable) Bukkit.getOnlinePlayers(), null)).sendPluginMessage((Plugin) FReports.getInstance(), "BungeeCord", b.toByteArray());
+            ((Player) Iterables.getFirst((Iterable) Bukkit.getOnlinePlayers(), null)).sendPluginMessage(FReports.getInstance(), "BungeeCord", b.toByteArray());
         }
     }
 }

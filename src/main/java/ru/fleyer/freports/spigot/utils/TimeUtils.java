@@ -1,7 +1,4 @@
-/*
- * Decompiled with CFR 0.150.
- */
-package ru.fleyer.freports.utils;
+package ru.fleyer.freports.spigot.utils;
 
 public class TimeUtils {
     public static String getTime(long sec) {

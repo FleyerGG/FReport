@@ -1,7 +1,4 @@
-/*
- * Decompiled with CFR 0.150.
- */
-package ru.fleyer.freports.cooldown;
+package ru.fleyer.freports.spigot.resource.cooldown;
 
 public class Cooldown {
     private String name;

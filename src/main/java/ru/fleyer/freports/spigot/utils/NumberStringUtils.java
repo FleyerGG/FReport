@@ -1,7 +1,4 @@
-/*
- * Decompiled with CFR 0.150.
- */
-package ru.fleyer.freports.utils;
+package ru.fleyer.freports.spigot.utils;
 
 public class NumberStringUtils {
     private static String format(long num, String single, String lessfive, String others) {

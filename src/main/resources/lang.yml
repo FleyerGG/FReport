@@ -1,5 +1,8 @@
 # Сообщения
 messages:
+
+  min_nick_simobols: "&6[!] Минимальная длина ника 4 символа"
+  max_nick_simobols: "&6[!] Максимальная длина ника 16 символов"
   no_permission: '&6[!] &fНедостаточно прав!'
   info_reports_player: '&6[!] &fИгрок &a%target% &fполучил &c{reports} &f- напишите &e(/reports, /rs)'
   usage_report_command: '&6[!] &f/report [ник] [причина] &a - подать жалобу на игрока'
@@ -12,7 +15,7 @@ messages:
   little_reason: '&6[!] &fУкажите длиннее причину репорта!'
   protection_player: '&6[!] &fВы не можете подать жалобу на данного игрока!'
   banned_player: '&6[!] &fВы наказали &a%target%'
-  cancel_report_player: '&6[!] &fАдминистратор &c{admin}&f отклонил репорт на игрока &a%target%'
+  cancel_report_player: '&6[!] &fАдминистратор &c%admin%&f отклонил репорт на игрока &a%target%'
 
 #Меню банов
 ban-player:

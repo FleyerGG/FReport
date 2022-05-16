@@ -1,7 +1,4 @@
-/*
- * Decompiled with CFR 0.150.
- */
-package ru.fleyer.freports.report;
+package ru.fleyer.freports.spigot.data.report;
 
 public class ReportInfo {
     private long startTime;

@@ -1,10 +1,4 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  org.bukkit.ChatColor
- */
-package ru.fleyer.freports.utils;
+package ru.fleyer.freports.spigot.utils;
 
 import org.bukkit.ChatColor;
 

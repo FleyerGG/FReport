@@ -1,16 +1,4 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  org.bukkit.Bukkit
- *  org.bukkit.command.Command
- *  org.bukkit.command.CommandExecutor
- *  org.bukkit.command.CommandSender
- *  org.bukkit.entity.Player
- *  org.bukkit.permissions.PermissibleBase
- *  org.bukkit.permissions.ServerOperator
- */
-package ru.fleyer.freports.commands;
+package ru.fleyer.freports.spigot.resource.commands;
 
 import com.ubivashka.vk.spigot.VKAPI;
 import org.bukkit.Bukkit;
@@ -20,11 +8,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissibleBase;
 import ru.fleyer.freports.FReports;
-import ru.fleyer.freports.cooldown.CooldownManager;
-import ru.fleyer.freports.report.ReportManager;
-import ru.fleyer.freports.utils.NumberStringUtils;
-import ru.fleyer.freports.utils.RequestBungee;
-import ru.fleyer.freports.utils.TimeUtils;
+import ru.fleyer.freports.spigot.resource.cooldown.CooldownManager;
+import ru.fleyer.freports.spigot.data.report.ReportManager;
+import ru.fleyer.freports.spigot.utils.NumberStringUtils;
+import ru.fleyer.freports.spigot.utils.RequestBungee;
+import ru.fleyer.freports.spigot.utils.TimeUtils;
 
 public class ReportCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String l, String[] args) {
@@ -45,6 +33,16 @@ public class ReportCommand implements CommandExecutor {
             sender.sendMessage(FReports.getInstance().getMessage("usage_report_command"));
             return false;
         }
+        if (args[0].length() >= 16){
+            sender.sendMessage(FReports.getInstance().getMessage("max_nick_simbols"));
+            return false;
+        }
+
+        if (args[0].length() <= 3){
+            sender.sendMessage(FReports.getInstance().getMessage("min_nick_simbols"));
+            return false;
+        }
+
         /*if (!new RequestBungee().checkOnline((Player)sender, args[0])) {
             sender.sendMessage(FReports.getInstance().getMessage("player_not_online").replace("%target%", args[0]));
             return false;
@@ -71,6 +69,7 @@ public class ReportCommand implements CommandExecutor {
             return false;
         }
         ReportManager.addReport(args[0], sender.getName(), sb.substring(0, sb.length() - 1));
+
         VKAPI.getInstance().getVKUtil().sendMSGtoPeer(FReports.getInstance().config().yaml().getInt("VK.peer"),("@online #ticket\n" +
                 "⚠ Поступила жалоба ⚠\n" +
                 "\n👤 Игрок: %player%" +

@@ -1,14 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  com.google.common.collect.Iterables
- *  org.bukkit.Bukkit
- *  org.bukkit.entity.Entity
- *  org.bukkit.entity.Player
- *  org.bukkit.plugin.Plugin
- *  org.bukkit.plugin.messaging.PluginMessageListener
- */
 package ru.fleyer.freports;
 
 import com.google.common.collect.Iterables;
@@ -35,7 +24,7 @@ public class HandlerRequestBungee implements PluginMessageListener {
             }
             DataInputStream in = new DataInputStream(new ByteArrayInputStream(bytes));
             switch (channel = in.readUTF()) {
-                case "namespace:nreports_teleportTo": {
+                case "nreports_teleportTo": {
                     Player sender = Bukkit.getPlayerExact(in.readUTF());
                     if (sender == null) {
                         return;
@@ -50,7 +39,7 @@ public class HandlerRequestBungee implements PluginMessageListener {
                     sender.setGameMode(GameMode.SPECTATOR);
                     break;
                 }
-                case "namespace:nreport_bukkit_sendmessageall": {
+                case "nreport_bukkit_sendmessageall": {
                     String message = in.readUTF();
                     String perm = in.readUTF();
                     for (Player p : Bukkit.getOnlinePlayers()) {
@@ -59,7 +48,7 @@ public class HandlerRequestBungee implements PluginMessageListener {
                     }
                     break;
                 }
-                case "namespace:nreports_listplayers_bukkit": {
+                case "nreports_listplayers_bukkit": {
                     String list = in.readUTF();
                     online_players.clear();
                     online_players.addAll(Arrays.asList(list.split(",")));
@@ -77,7 +66,7 @@ public class HandlerRequestBungee implements PluginMessageListener {
                 ByteArrayOutputStream b = new ByteArrayOutputStream();
                 DataOutputStream out = new DataOutputStream(b);
                 try {
-                    out.writeUTF("namespace:nreports_listplayers");
+                    out.writeUTF("nreports_listplayers");
                     out.writeUTF(((Player) Iterables.getFirst((Iterable) Bukkit.getOnlinePlayers(), null)).getName());
                 } catch (Exception ex) {
                     ex.printStackTrace();

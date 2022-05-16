@@ -1,4 +1,4 @@
-package ru.fleyer.freports.inventory;
+package ru.fleyer.freports.spigot.data.inventory;
 
 import com.rainchat.raingui.menus.ClickItem;
 import com.rainchat.raingui.menus.PaginationMenu;
@@ -7,12 +7,12 @@ import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import ru.fleyer.freports.FReports;
-import ru.fleyer.freports.placeholders.ReportInfoPlaceholder;
-import ru.fleyer.freports.placeholders.ReportPlaceholder;
-import ru.fleyer.freports.report.Report;
-import ru.fleyer.freports.report.ReportInfo;
-import ru.fleyer.freports.report.ReportManager;
-import ru.fleyer.freports.utils.RequestBungee;
+import ru.fleyer.freports.spigot.placeholders.ReportInfoPlaceholder;
+import ru.fleyer.freports.spigot.placeholders.ReportPlaceholder;
+import ru.fleyer.freports.spigot.data.report.Report;
+import ru.fleyer.freports.spigot.data.report.ReportInfo;
+import ru.fleyer.freports.spigot.data.report.ReportManager;
+import ru.fleyer.freports.spigot.utils.RequestBungee;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -125,6 +125,8 @@ public class OpenListInv {
         )), event -> {
             paginationMenu.close(player);
             ReportManager.removeReport(target);
+            new RequestBungee().sendMessageAll(FReports.getInstance().getMessage("cancel_report_player").replace("%admin%", player.getName()).replace("%target%", target), "freport.info-report");
+            System.out.println(FReports.getInstance().getMessage("cancel_report_player").replace("%admin%", player.getName()).replace("%target%", target));
             player.sendMessage(msg("&aВы успешно отклонили репорт"));
         }));
 
@@ -134,7 +136,7 @@ public class OpenListInv {
                 "&aНажмите сюда, чтобы телепортироваться"
         )), event -> {
             if (new RequestBungee().checkOnline(player, target)) {
-                new RequestBungee().teleport(player.getName(), target, FReports.getInstance().getMessage("messages.teleport_player").replace("%target%", target));
+                new RequestBungee().teleport(player.getName(), target, FReports.getInstance().getMessage("teleport_player").replace("%target%", target));
                 player.sendMessage(msg(lang.getString("messages.teleport_player").replace("%target%", target)));
                 player.setGameMode(GameMode.SPECTATOR);
             } else {
@@ -160,27 +162,28 @@ public class OpenListInv {
 
 
         List<ClickItem> clickItems = new ArrayList<>();
+        if (ReportManager.getReport(target) != null) {
+            for (ReportInfo report : ReportManager.getReport(target).getReports()) {
+                ClickItem clickItem = new ClickItem(new Item()
+                        .material(Material.PAPER)
+                        .name("&7Репорт на &e%report_name%")
+                        .lore(Arrays.asList(
+                                "",
+                                "&7Нытик: &6%reportinfo_name%",
+                                "&7Причина: &6%reportinfo_reason%",
+                                "&7Время: &e%reportinfo_time% назад"
 
-        for (ReportInfo report : ReportManager.getReport(target).getReports()) {
-            ClickItem clickItem = new ClickItem(new Item()
-                    .material(Material.PAPER)
-                    .name("&7Репорт на &e%report_name%")
-                    .lore(Arrays.asList(
-                            "",
-                            "&7Нытик: &6%reportinfo_name%",
-                            "&7Причина: &6%reportinfo_reason%",
-                            "&7Время: &e%reportinfo_time% назад"
+                        )).setPlaceholders(new ReportInfoPlaceholder(report), new ReportPlaceholder(ReportManager.getReport(target))),
 
-                    )).setPlaceholders(new ReportInfoPlaceholder(report), new ReportPlaceholder(ReportManager.getReport(target))),
-
-                    event -> {
-                        onBansPlayer(player, target);
-                    }
-            );
-            clickItems.add(clickItem);
+                        event -> {
+                            onBansPlayer(player, target);
+                        }
+                );
+                clickItems.add(clickItem);
+            }
+            paginationMenu.setItems(clickItems);
+            paginationMenu.open(player);
         }
-        paginationMenu.setItems(clickItems);
-        paginationMenu.open(player);
     }
 
     public static void onBansPlayer(Player player, String target) {
@@ -221,11 +224,11 @@ public class OpenListInv {
             paginationMenu.setPage(paginationMenu.getPage() - 1);
         }));
 
-        paginationMenu.setItem(38,new ClickItem(new Item().material(Material.SKELETON_SKULL).name("&eВернуться в профиль игрока").lore(Arrays.asList(
+        paginationMenu.setItem(38, new ClickItem(new Item().material(Material.SKELETON_SKULL).name("&eВернуться в профиль игрока").lore(Arrays.asList(
                 "",
                 "&aНажмите сюда, чтобы вернуться в профиль игрока"
         )), event -> {
-            openTargetReport(player,target);
+            openTargetReport(player, target);
         }));
 
         for (String s : FReports.getInstance().lang().msg().getConfigurationSection("ban-player.bans").getKeys(false)) {
@@ -236,7 +239,9 @@ public class OpenListInv {
                 player.chat(lang.getString("ban-player.bans." + s + ".punish").replace("%target%", target));
                 ReportManager.removeReport(target);
                 paginationMenu.close(player);
-                player.sendMessage(FReports.getInstance().getMessage("banned_player").replace("%target%",target));
+                new RequestBungee().sendMessageAll(FReports.getInstance().getMessage("cancel_report_player").replace("%admin%", player.getName()).replace("%target%", target), "freport.info-report");
+                System.out.println(FReports.getInstance().getMessage("cancel_report_player").replace("%admin%", player.getName()).replace("%target%", target));
+                player.sendMessage(FReports.getInstance().getMessage("banned_player").replace("%target%", target));
 
             });
             clickItems.add(clickItem);
@@ -245,7 +250,6 @@ public class OpenListInv {
         paginationMenu.setItems(clickItems);
         paginationMenu.open(player);
     }
-
 
 
 }
